@@ -10,8 +10,27 @@
 
 <script>
 import { defineComponent } from 'vue'
+import { api } from "boot/axios";
 
 export default defineComponent({
-  name: 'IndexPage'
+  name: 'IndexPage',
+  data () {
+    return {
+      list: []
+    }
+  },
+  methods: {
+    async getUsers () {
+      const { data } = await api.get('users', {
+        params: {
+          limit: 10
+        }
+      })
+      console.debug({data})
+    }
+  },
+  created () {
+    this.getUsers()
+  }
 })
 </script>
