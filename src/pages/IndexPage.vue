@@ -1,10 +1,14 @@
 <template>
-  <q-page class="flex flex-center">
-    <div class="row full-width justify-center">
-      {{$t('welcome')}}
-    </div>
-    <div class="row full-width justify-center">
-      {{$t('welcomeWithUsername', { username: 'Davide'})}}
+  <q-page class="flex">
+    <div class="q-pa-md row full-width">
+      <q-table
+        class="col-12"
+        flat
+        :title="$t('common.userList')"
+        :rows="rows"
+        :columns="columns"
+        row-key="_id"
+      />
     </div>
   </q-page>
 </template>
@@ -17,21 +21,51 @@ export default defineComponent({
   name: 'IndexPage',
   data () {
     return {
-      list: []
+      rows: [],
+      columns: [
+        {
+          name: 'name',
+          label: this.$t('common.name'),
+          align: 'left',
+          field: row => row?.name || ' - ',
+        },
+        {
+          name: 'surname',
+          label: this.$t('common.surname'),
+          align: 'left',
+          field: row => row?.surname || ' - ',
+        },
+        {
+          name: 'email',
+          label: this.$t('common.email'),
+          align: 'left',
+          field: row => row?.email || ' - ',
+        },
+        {
+          name: 'role',
+          label: this.$t('common.role'),
+          align: 'left',
+          field: row => row?.role || ' - ',
+        },
+      ]
     }
   },
   methods: {
     async getUsers () {
-      const { data } = await api.get('users', {
-        params: {
-          limit: 10
-        }
-      })
-      console.debug({data})
+      try {
+        const { data } = await api.get('users', {
+          params: {
+            limit: 10
+          }
+        })
+        this.rows = data
+      } catch (e) {
+        console.error({e})
+      }
     }
   },
-  created () {
-    this.getUsers()
+  async created () {
+    await this.getUsers()
   }
 })
 </script>

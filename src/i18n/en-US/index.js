@@ -3,5 +3,13 @@
 
 export default {
   welcome: "Benvenuto",
-  welcomeWithUsername: "Benvenuto {username}"
+  welcomeWithUsername: "Benvenuto {username}",
+  common: {
+    userList: 'Lista utenti',
+    name: 'Nome',
+    surname: 'Cognome',
+    email: 'Email',
+    username: 'Username',
+    role: 'Ruolo'
+  }
 }
