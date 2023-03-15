@@ -1,10 +1,11 @@
 <template>
   <q-page class="flex flex-center">
-    <img
-      alt="Quasar logo"
-      src="~assets/quasar-logo-vertical.svg"
-      style="width: 200px; height: 200px"
-    >
+    <div class="row full-width justify-center">
+      {{$t('welcome')}}
+    </div>
+    <div class="row full-width justify-center">
+      {{$t('welcomeWithUsername', { username: 'Davide'})}}
+    </div>
   </q-page>
 </template>
 
