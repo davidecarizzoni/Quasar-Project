@@ -8,7 +8,13 @@
         :rows="rows"
         :columns="columns"
         row-key="_id"
-      />
+      >
+        <template v-slot:body-cell-actions="props">
+          <q-td :props="props">
+            <q-btn icon="edit" @click="() => router.push(`users/${props.key}`)" color="primary" round />
+          </q-td>
+        </template>
+      </q-table>
     </div>
   </q-page>
 </template>
@@ -16,13 +22,23 @@
 <script>
 import { defineComponent } from 'vue'
 import { api } from "boot/axios";
+import {useRouter} from "vue-router";
 
 export default defineComponent({
   name: 'UsersPage',
+  setup () {
+    return {
+      router: useRouter()
+    }
+  },
   data () {
     return {
       rows: [],
       columns: [
+        {
+          name: 'actions',
+          align: 'left',
+        },
         {
           name: 'name',
           label: this.$t('common.name'),

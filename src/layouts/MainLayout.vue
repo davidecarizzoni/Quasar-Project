@@ -6,6 +6,7 @@
           flat
           dense
           round
+          class="text-weight-bold"
           icon="menu"
           aria-label="Menu"
           @click="toggleLeftDrawer"
@@ -24,7 +25,7 @@
       show-if-above
       bordered
     >
-      <q-item to="users" active-class="router-link-active" exact-active-class="router-link-exact-active">
+      <q-item :to="{ name: 'users' }" :class="{'text-weight-bold': ['users', 'usersDetail'].includes(route.name)}">
         <q-item-section avatar>
           <q-icon name="person" size="md" />
         </q-item-section>
@@ -33,7 +34,7 @@
           {{ $t('common.userList') }}
         </q-item-section>
       </q-item>
-      <q-item to="/" active-class="router-link-active" exact-active-class="router-link-exact-active">
+      <q-item :to="{ name: 'Entry' }" :class="{'text-weight-bold': ['Entry'].includes(route.name)}">
         <q-item-section avatar>
           <q-icon name="home" size="md" />
         </q-item-section>
@@ -52,6 +53,7 @@
 
 <script>
 import { defineComponent, ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
 export default defineComponent({
   name: 'MainLayout',
@@ -60,6 +62,8 @@ export default defineComponent({
 
     return {
       leftDrawerOpen,
+      route: useRoute(),
+      router: useRouter(),
       toggleLeftDrawer () {
         leftDrawerOpen.value = !leftDrawerOpen.value
       }
@@ -67,9 +71,3 @@ export default defineComponent({
   }
 })
 </script>
-
-<style lang="scss" scoped>
-.router-link-active, .router-link-exact-active, .set-as-active {
-  font-weight: bold;
-}
-</style>

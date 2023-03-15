@@ -11,6 +11,7 @@ export default {
     email: 'Email',
     username: 'Username',
     role: 'Ruolo',
-    index: 'Index'
+    index: 'Index',
+    save: 'Salva'
   }
 }

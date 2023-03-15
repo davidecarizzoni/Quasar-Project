@@ -6,7 +6,6 @@
 
 <script>
 import { defineComponent } from 'vue'
-import { api } from "boot/axios";
 
 export default defineComponent({
   name: 'IndexPage',
