@@ -10,6 +10,7 @@ export default {
     surname: 'Cognome',
     email: 'Email',
     username: 'Username',
-    role: 'Ruolo'
+    role: 'Ruolo',
+    index: 'Index'
   }
 }
