@@ -19,6 +19,7 @@ export default {
     index: 'Index',
     save: 'Salva',
     search: 'Cerca',
+    login: 'Login',
     user: 'Utente',
     advisor: 'Consulente'
   },

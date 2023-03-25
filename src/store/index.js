@@ -1,7 +1,6 @@
-import { store } from 'quasar/wrappers'
-import { createStore } from 'vuex'
-
-import example from './module-example'
+import { createStore, createLogger } from 'vuex'
+import createPersistedState from 'vuex-persistedstate'
+import user from './user'
 
 /*
  * If not building with SSR mode, you can
@@ -12,16 +11,18 @@ import example from './module-example'
  * with the Store instance.
  */
 
-export default store(function (/* { ssrContext } */) {
-  const Store = createStore({
-    modules: {
-      example
-    },
-
-    // enable strict mode (adds overhead!)
-    // for dev mode and --debug builds only
-    strict: process.env.DEBUGGING
-  })
-  console.debug({Store})
-  return Store
+const store = createStore({
+  modules: {
+    user
+  },
+  plugins: [
+    createLogger(),
+    createPersistedState({
+      key: 'quasar-project-jac',
+      paths: ['user']
+    })
+  ],
+  strict: process.env.DEBUGGING
 })
+
+export default store

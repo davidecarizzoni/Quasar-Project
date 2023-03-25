@@ -1,6 +1,17 @@
 
 const routes = [
   {
+    path: '/onboarding',
+    component: () => import('layouts/OnBoardingLayout.vue'),
+    children: [
+      {
+        path: 'login',
+        name: 'login',
+        component: () => import('pages/LoginPage.vue')
+      },
+    ]
+  },
+  {
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
@@ -18,12 +29,7 @@ const routes = [
             component: () => import('pages/UsersDetailPage.vue')
           }
         ]
-      },
-      {
-        path: '',
-        name: 'Entry',
-        component: () => import('pages/IndexPage.vue')
-      },
+      }
     ]
   },
 

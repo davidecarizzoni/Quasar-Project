@@ -43,6 +43,15 @@
           {{ $t('common.index') }}
         </q-item-section>
       </q-item>
+      <q-item clickable @click="logout">
+        <q-item-section avatar>
+          <q-icon name="fas fa-sign-out" size="md" />
+        </q-item-section>
+
+        <q-item-section>
+          {{ $t('common.logout') }}
+        </q-item-section>
+      </q-item>
     </q-drawer>
 
     <q-page-container>
@@ -54,19 +63,28 @@
 <script>
 import { defineComponent, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import {useStore} from "vuex";
 
 export default defineComponent({
   name: 'MainLayout',
   setup () {
     const leftDrawerOpen = ref(false)
+    const store = useStore()
+    const router = useRouter()
+
+    const logout = () => {
+      store.dispatch('user/logout')
+      router.push('onboarding/login')
+    }
+
+    const toggleLeftDrawer = () => leftDrawerOpen.value = !leftDrawerOpen.value
 
     return {
       leftDrawerOpen,
       route: useRoute(),
-      router: useRouter(),
-      toggleLeftDrawer () {
-        leftDrawerOpen.value = !leftDrawerOpen.value
-      }
+      router,
+      logout,
+      toggleLeftDrawer
     }
   }
 })
