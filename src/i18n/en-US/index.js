@@ -12,6 +12,11 @@ export default {
     username: 'Username',
     role: 'Ruolo',
     index: 'Index',
-    save: 'Salva'
-  }
+    save: 'Salva',
+    search: 'Cerca',
+    user: 'Utente',
+    advisor: 'Consulente'
+  },
+  user: 'Utente',
+  advisor: 'Consulente'
 }

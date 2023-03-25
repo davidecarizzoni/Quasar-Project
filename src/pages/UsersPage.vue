@@ -1,11 +1,16 @@
 <template>
-  <q-page class="flex">
+  <q-page padding>
+    <div class="q-pa-md row full-width">
+      <div class="col-4">
+        <q-input outlined dense v-model="filter" :label="$t('common.search')"/>
+      </div>
+    </div>
     <div class="q-pa-md row full-width">
       <q-table
         class="col-12"
         flat
         :title="$t('common.userList')"
-        :rows="rows"
+        :rows="filteredData"
         :columns="columns"
         row-key="_id"
       >
@@ -34,6 +39,7 @@ export default defineComponent({
   data () {
     return {
       rows: [],
+      filter: '',
       columns: [
         {
           name: 'actions',
@@ -61,9 +67,16 @@ export default defineComponent({
           name: 'role',
           label: this.$t('common.role'),
           align: 'left',
-          field: row => row?.role || ' - ',
+          field: row => this.$t(row.role)
         },
       ]
+    }
+  },
+  computed: {
+    filteredData () {
+      if(!this.filter) return this.rows
+      return this?.rows
+        .filter(d => d.name.includes(this.filter) || d.surname.includes(this.filter) || d.email.includes(this.filter))
     }
   },
   methods: {
