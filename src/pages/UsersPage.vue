@@ -1,8 +1,11 @@
 <template>
   <q-page padding>
-    <div class="q-pa-md row full-width">
+    <div class="q-pa-md row justify-between">
       <div class="col-4">
         <q-input outlined dense v-model="filter" :label="$t('common.search')"/>
+      </div>
+      <div>
+        <q-btn color="primary" :label="$t('common.createUser')" @click="createUser"/>
       </div>
     </div>
     <div class="q-pa-md row full-width">
@@ -27,7 +30,7 @@
 <script>
 import { defineComponent } from 'vue'
 import { api } from "boot/axios";
-import {useRouter} from "vue-router";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
   name: 'UsersPage',
@@ -80,6 +83,14 @@ export default defineComponent({
     }
   },
   methods: {
+    createUser () {
+      this.router.push({
+        name: 'usersDetail',
+        params: {
+          id: 'new'
+        }
+      })
+    },
     async getUsers () {
       try {
         const { data } = await api.get('users', {

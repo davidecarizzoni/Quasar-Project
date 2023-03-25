@@ -1,60 +1,114 @@
 <template>
   <q-page padding>
-    <div class="row q-col-gutter-md">
-      <q-input class="col-4" v-model="user.name" :label="$t('common.name')" outlined dense/>
-      <q-input class="col-4" v-model="user.surname" :label="$t('common.surname')" outlined dense/>
-    </div>
     <div class="row">
-      <q-btn :label="$t('common.save')" @click="onSave" :loading="loading"/>
+      <div class="text-weight-bold text-h4">
+        {{$t('common.userDetail')}}
+      </div>
+    </div>
+    <div class="row q-col-gutter-md q-mt-md">
+      <q-input class="col-12 col-md-4" ref="nameRef" :rules="[notEmpty]" v-model="user.name" :label="$t('common.name')" outlined dense/>
+      <q-input class="col-12 col-md-4" ref="surnameRef" :rules="[notEmpty]" v-model="user.surname" :label="$t('common.surname')" outlined dense/>
+      <q-input class="col-12 col-md-4" ref="emailRef" :rules="[notEmpty, validEmail]" v-model="user.email" :label="$t('common.email')" outlined dense/>
+      <q-input class="col-12 col-md-4" ref="passwordRef" :rules="[notEmpty]" v-if="isAdd" v-model="user.password" :label="$t('common.password')" outlined dense/>
+    </div>
+    <div class="row q-mt-md justify-end">
+      <q-btn :label="$t('common.save')" color="primary" @click="onClickSave" :loading="loading"/>
     </div>
   </q-page>
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import {computed, defineComponent, ref} from 'vue'
 import { api } from "boot/axios";
 import {useRouter, useRoute} from "vue-router";
+import {t} from "boot/i18n";
 
 export default defineComponent({
   name: 'UsersDetailPage',
   setup () {
-    return {
-      router: useRouter(),
-      route: useRoute()
+    const emailRegex = /^\S+@\S+\.\S+$/
+    const router = useRouter()
+    const route = useRoute()
+    const loading = ref(false)
+    const nameRef = ref(null)
+    const surnameRef = ref(null)
+    const emailRef = ref(null)
+    const passwordRef = ref(null)
+    const isAdd = computed(() => route.params.id === 'new')
+
+    const user = ref({
+      name: undefined,
+      surname: undefined,
+      email: undefined,
+      password: undefined,
+      role: 'user'
+    })
+
+    const notEmpty = val => !!val || t('common.requiredField')
+    const validEmail = val => emailRegex.test(val) || t('common.invalidEmail')
+
+    const isValid = () => {
+      const fieldsIsValid = []
+      fieldsIsValid.push(nameRef.value.validate())
+      fieldsIsValid.push(surnameRef.value.validate())
+      fieldsIsValid.push(emailRef.value.validate())
+      isAdd.value && fieldsIsValid.push(passwordRef.value.validate())
+
+      return fieldsIsValid.every(f => f === true)
     }
-  },
-  data () {
-    return {
-      loading: false,
-      user: {
-        name: undefined,
-        surname: undefined
+
+    const createUser = async () => {
+      const { data } = await api.post('users', user.value)
+      return data
+    }
+
+    const updateUser = async () => {
+      const { id } = route.params
+      const { data } =  await api.put(`users/${id}`, user.value)
+      return data
+    }
+
+    const onClickSave = async () => {
+      if (!isValid()) return
+      try {
+        loading.value = true
+        isAdd.value ? await createUser() : await updateUser()
+        loading.value = false
+        router.back()
+      } catch (e) {
+        console.error({e})
+        loading.value = false
       }
     }
-  },
-  methods: {
-    async getUser () {
+
+    const getUser = async () => {
       try {
-        const { data } = await api.get(`users/${this.route.params.id}`)
-        this.user = data
+        if(isAdd.value) {
+          return
+        }
+        const { data } = await api.get(`users/${route.params.id}`)
+        user.value = { ...data}
       } catch (e) {
         console.error({e})
       }
-    },
-    async onSave () {
-      try {
-        this.loading = true
-        await api.put(`users/${this.route.params.id}`, { ...this.user })
-        this.router.back()
-        this.loading = false
-      } catch (e) {
-        this.loading = false
-        console.error({e})
-      }
+    }
+
+    getUser()
+
+    return {
+      router,
+      route,
+      user,
+      loading,
+      notEmpty,
+      validEmail,
+      onClickSave,
+      nameRef,
+      surnameRef,
+      emailRef,
+      passwordRef,
+      isAdd
     }
   },
-  async created () {
-    await this.getUser()
-  }
 })
 </script>
