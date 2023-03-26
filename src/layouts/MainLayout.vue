@@ -34,7 +34,7 @@
           {{ $t('common.userList') }}
         </q-item-section>
       </q-item>
-      <q-item :to="{ name: 'Entry' }" :class="{'text-weight-bold': ['Entry'].includes(route.name)}">
+      <q-item :to="{ name: 'entry' }" :class="{'text-weight-bold': ['entry'].includes(route.name)}">
         <q-item-section avatar>
           <q-icon name="home" size="md" />
         </q-item-section>

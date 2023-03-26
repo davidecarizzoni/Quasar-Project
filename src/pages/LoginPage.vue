@@ -1,17 +1,19 @@
 <template>
-  <q-page padding>
-    <div class="row">
-      <div class="text-weight-bold text-h4">
-        {{$t('common.login')}}
+  <q-page padding class="full-height row flex items-center justify-center">
+    <q-card flat class="col-12 col-md-4 q-pa-md q-py-lg" bordered style="border-radius: 0.5rem">
+      <div class="row justify-center">
+        <div class="text-weight-bold text-h4">
+          {{$t('common.login')}}
+        </div>
       </div>
-    </div>
-    <div class="row q-col-gutter-md q-mt-md">
-      <q-input class="col-12 col-md-4" ref="emailRef" :rules="[notEmpty, validEmail]" v-model="user.email" :label="$t('common.email')" outlined dense/>
-      <q-input class="col-12 col-md-4" ref="passwordRef" :rules="[notEmpty]" v-model="user.password" :label="$t('common.password')" outlined dense/>
-    </div>
-    <div class="row q-mt-md justify-center">
-      <q-btn :label="$t('common.login')" color="primary" @click="onClickSave" :loading="loading"/>
-    </div>
+      <div class="row q-col-gutter-md q-mt-md">
+        <q-input class="col-12 col-md-12" ref="emailRef" :rules="[notEmpty, validEmail]" v-model="user.email" :label="$t('common.email')" outlined dense/>
+        <q-input class="col-12 col-md-12" ref="passwordRef" :rules="[notEmpty]" v-model="user.password" :label="$t('common.password')" outlined dense/>
+      </div>
+      <div class="row q-mt-md justify-center">
+        <q-btn :label="$t('common.login')" color="primary" @click="onClickSave" :loading="loading"/>
+      </div>
+    </q-card>
   </q-page>
 </template>
 

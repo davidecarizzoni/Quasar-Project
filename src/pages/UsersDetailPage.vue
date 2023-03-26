@@ -10,6 +10,8 @@
       <q-input class="col-12 col-md-4" ref="surnameRef" :rules="[notEmpty]" v-model="user.surname" :label="$t('common.surname')" outlined dense/>
       <q-input class="col-12 col-md-4" ref="emailRef" :rules="[notEmpty, validEmail]" v-model="user.email" :label="$t('common.email')" outlined dense/>
       <q-input class="col-12 col-md-4" ref="passwordRef" :rules="[notEmpty]" v-if="isAdd" v-model="user.password" :label="$t('common.password')" outlined dense/>
+      <q-input class="col-12 col-md-4" :rules="[]" v-model="user.telephone" :label="$t('common.telephone')" outlined dense/>
+      <q-input class="col-12" :rules="[]" v-model="user.description" type="textarea" :label="$t('common.description')" outlined dense/>
     </div>
     <div class="row q-mt-md justify-end">
       <q-btn :label="$t('common.save')" color="primary" @click="onClickSave" :loading="loading"/>
@@ -20,8 +22,8 @@
 <script>
 import {computed, defineComponent, ref} from 'vue'
 import { api } from "boot/axios";
-import {useRouter, useRoute} from "vue-router";
-import {t} from "boot/i18n";
+import { useRouter, useRoute } from "vue-router";
+import { t } from "boot/i18n";
 
 export default defineComponent({
   name: 'UsersDetailPage',
@@ -41,6 +43,8 @@ export default defineComponent({
       surname: undefined,
       email: undefined,
       password: undefined,
+      description: undefined,
+      telephone: undefined,
       role: 'user'
     })
 

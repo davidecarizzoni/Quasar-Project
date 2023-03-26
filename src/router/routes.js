@@ -29,6 +29,11 @@ const routes = [
             component: () => import('pages/UsersDetailPage.vue')
           }
         ]
+      },
+      {
+        path: '',
+        name: 'entry',
+        component: () => import('pages/IndexPage.vue')
       }
     ]
   },

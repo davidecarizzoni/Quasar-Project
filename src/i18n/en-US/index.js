@@ -20,6 +20,7 @@ export default {
     save: 'Salva',
     search: 'Cerca',
     login: 'Login',
+    logout: 'Logout',
     user: 'Utente',
     advisor: 'Consulente'
   },
