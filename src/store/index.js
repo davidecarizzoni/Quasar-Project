@@ -1,6 +1,7 @@
 import { createStore, createLogger } from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
 import user from './user'
+import app from './app'
 
 /*
  * If not building with SSR mode, you can
@@ -13,7 +14,8 @@ import user from './user'
 
 const store = createStore({
   modules: {
-    user
+    user,
+    app
   },
   plugins: [
     createLogger(),

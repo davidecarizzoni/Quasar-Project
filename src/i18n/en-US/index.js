@@ -21,8 +21,11 @@ export default {
     search: 'Cerca',
     login: 'Login',
     logout: 'Logout',
+    welcome: 'Benvenuto',
+    disconnected: 'Logout avvenuto con successo',
     user: 'Utente',
-    advisor: 'Consulente'
+    advisor: 'Consulente',
+    loginRequired: 'Login necessario'
   },
   user: 'Utente',
   advisor: 'Consulente'

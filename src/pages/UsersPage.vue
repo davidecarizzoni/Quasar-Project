@@ -1,6 +1,6 @@
 <template>
   <q-page padding>
-    <div class="q-pa-md row justify-between">
+    <div class="q-py-md row justify-between">
       <div class="col-4">
         <q-input outlined dense v-model="filter" :label="$t('common.search')"/>
       </div>
@@ -8,7 +8,7 @@
         <q-btn color="primary" :label="$t('common.createUser')" @click="createUser"/>
       </div>
     </div>
-    <div class="q-pa-md row full-width">
+    <div class="q-pa-md row full-width" v-if="token">
       <q-table
         class="col-12"
         flat
@@ -24,6 +24,11 @@
         </template>
       </q-table>
     </div>
+    <div v-else>
+      <div class="text-h6">
+        {{$t('common.loginRequired')}}
+      </div>
+    </div>
   </q-page>
 </template>
 
@@ -31,6 +36,7 @@
 import { defineComponent } from 'vue'
 import { api } from "boot/axios";
 import { useRouter } from "vue-router";
+import { mapGetters } from 'vuex'
 
 export default defineComponent({
   name: 'UsersPage',
@@ -76,10 +82,16 @@ export default defineComponent({
     }
   },
   computed: {
+    ...mapGetters(['token']),
     filteredData () {
       if(!this.filter) return this.rows
       return this?.rows
         .filter(d => d.name.includes(this.filter) || d.surname.includes(this.filter) || d.email.includes(this.filter))
+    }
+  },
+  watch: {
+    token (newValue) {
+      newValue && this.getUsers()
     }
   },
   methods: {

@@ -12,8 +12,7 @@ const api = axios.create({ baseURL: process.env.API_URL })
 
 api.interceptors.request.use(
   conf => {
-    console.debug({ store: store.getters })
-    const token = store.getters["user/token"]
+    const token = store.getters.token
     conf.headers.Authorization = conf.headers.Authorization || `Bearer ${token}`
     return conf
   },
