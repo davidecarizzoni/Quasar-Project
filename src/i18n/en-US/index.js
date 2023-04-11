@@ -25,6 +25,8 @@ export default {
     disconnected: 'Logout avvenuto con successo',
     user: 'Utente',
     advisor: 'Consulente',
+    openChat: 'Apri chat',
+    confirmOpenChat: 'Sei sicuro di voler aprire una chat?',
     chats: 'Chat',
     loginRequired: 'Login necessario'
   },

@@ -1,12 +1,12 @@
 <template>
   <q-dialog ref="dialogRef" @hide="onDialogHide">
-    <q-card class="q-dialog-plugin">
+    <q-card class="q-dialog-plugin" style="border-radius: 0.5rem">
       <q-card flat bordered style="border-radius: 0.5rem" class="q-pa-md">
         <div class="row justify-center">
-          <div class="text-weight-bold text-h3">
+          <div class="col-12 text-weight-bold text-h5">
             {{title}}
           </div>
-          <div class="text">
+          <div class="col-12 text">
             {{text}}
           </div>
         </div>
@@ -23,11 +23,9 @@
 import { useDialogPluginComponent } from 'quasar'
 import {defineComponent, ref} from 'vue'
 import {useRoute, useRouter} from "vue-router";
-import {t} from "boot/i18n";
-import {useStore} from "vuex";
 
 export default defineComponent({
-  name: 'LoginModal',
+  name: 'ConfirmModal',
   props: {
     title: String,
     text: String,
@@ -36,11 +34,9 @@ export default defineComponent({
   emits: [
     ...useDialogPluginComponent.emits
   ],
-  setup () {
+  setup (props) {
     const { dialogRef, onDialogHide, onDialogOK, onDialogCancel } = useDialogPluginComponent()
-    const emailRegex = /^\S+@\S+\.\S+$/
     const router = useRouter()
-    const store = useStore()
     const route = useRoute()
     const loading = ref(false)
     const emailRef = ref(null)
@@ -51,23 +47,10 @@ export default defineComponent({
       password: undefined,
     })
 
-    const notEmpty = val => !!val || t('common.requiredField')
-    const validEmail = val => emailRegex.test(val) || t('common.invalidEmail')
-
-    const isValid = () => {
-      const fieldsIsValid = []
-      fieldsIsValid.push(emailRef.value.validate())
-      fieldsIsValid.push(passwordRef.value.validate())
-
-      return fieldsIsValid.every(f => f === true)
-    }
-
     const onClickSave = async () => {
-      if (!isValid()) return
       try {
         loading.value = true
-        await store.dispatch('login', user.value)
-        await router.push({ name: 'users' })
+        await props.onConfirm()
         onDialogOK()
         loading.value = false
       } catch (e) {
@@ -84,8 +67,6 @@ export default defineComponent({
       route,
       user,
       loading,
-      notEmpty,
-      validEmail,
       onClickSave,
       emailRef,
       passwordRef,

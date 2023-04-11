@@ -19,7 +19,8 @@
       >
         <template v-slot:body-cell-actions="props">
           <q-td :props="props">
-            <q-btn icon="edit" @click="() => router.push(`users/${props.key}`)" color="primary" round />
+            <q-btn icon="edit" @click="() => router.push(`users/${props.key}`)" color="black" round flat />
+            <q-btn icon="message" @click="() => onClickOpenChat(props.key)" color="primary" round flat />
           </q-td>
         </template>
       </q-table>
@@ -37,6 +38,7 @@ import { defineComponent } from 'vue'
 import { api } from "boot/axios";
 import { useRouter } from "vue-router";
 import { mapGetters } from 'vuex'
+import ConfirmModal from "components/modals/ConfirmModal";
 
 export default defineComponent({
   name: 'UsersPage',
@@ -101,6 +103,20 @@ export default defineComponent({
         params: {
           id: 'new'
         }
+      })
+    },
+    onClickOpenChat (userId) {
+      this.$q.dialog({
+        component: ConfirmModal,
+        componentProps: {
+          title: this.$t('common.openChat'),
+          text: this.$t('common.confirmOpenChat'),
+          onConfirm: async () => {
+            console.debug({userId})
+            await this.$store.dispatch('createChat', userId)
+          }
+        },
+        parent: this
       })
     },
     async getUsers () {
