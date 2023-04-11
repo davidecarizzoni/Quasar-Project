@@ -1,6 +1,6 @@
 <template>
-  <q-page>
-    <div class="row">
+  <q-page padding>
+    <div class="row q-col-gutter-sm">
       <div class="col-4">
         <ChatList />
       </div>
