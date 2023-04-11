@@ -1,10 +1,10 @@
 <template>
   <q-page padding>
-    <div class="row q-col-gutter-sm">
-      <div class="col-4">
+    <div class="row q-col-gutter-sm full-height">
+      <div class="col-4 column flex chat-list">
         <ChatList />
       </div>
-      <div class="col-8">
+      <div class="col-8 column flex">
         <ChatDetail />
       </div>
     </div>
@@ -21,5 +21,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
+.chat-list {
+  border-right: 1px solid lightgray;
+  height: 100%;
+  min-height: 95vh;
+}
 </style>

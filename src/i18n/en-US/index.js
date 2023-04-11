@@ -28,7 +28,8 @@ export default {
     openChat: 'Apri chat',
     confirmOpenChat: 'Sei sicuro di voler aprire una chat?',
     chats: 'Chat',
-    loginRequired: 'Login necessario'
+    loginRequired: 'Login necessario',
+    writeFirst: 'Scrivi per primo'
   },
   user: 'Utente',
   advisor: 'Consulente'
