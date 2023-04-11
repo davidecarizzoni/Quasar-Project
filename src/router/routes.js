@@ -31,6 +31,16 @@ const routes = [
         ]
       },
       {
+        path: 'chats',
+        children: [
+          {
+            path: '',
+            name: 'chats',
+            component: () => import('pages/ChatsPage.vue')
+          }
+        ]
+      },
+      {
         path: '',
         name: 'entry',
         component: () => import('pages/IndexPage.vue')

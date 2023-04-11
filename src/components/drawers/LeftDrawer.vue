@@ -13,13 +13,13 @@
         {{ $t('common.userList') }}
       </q-item-section>
     </q-item>
-    <q-item :to="{ name: 'entry' }" :class="{'text-weight-bold': ['entry'].includes(route.name)}">
+    <q-item :to="{ name: 'chats' }" :class="{'text-weight-bold': ['chats'].includes(route.name)}">
       <q-item-section avatar>
-        <q-icon name="home" size="md" />
+        <q-icon name="message" size="sm" class="q-ml-xs"/>
       </q-item-section>
 
       <q-item-section>
-        {{ $t('common.index') }}
+        {{ $t('common.chats') }}
       </q-item-section>
     </q-item>
   </q-drawer>

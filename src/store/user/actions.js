@@ -11,7 +11,7 @@ export async function login ({ commit }, payload) {
   // (i.e., a string in which each character in the string is treated as a byte of binary data).
   commit('setToken', data.token)
   commit('setDetails', data.user)
-  return data.user 
+  return data.user
 
 }
 
