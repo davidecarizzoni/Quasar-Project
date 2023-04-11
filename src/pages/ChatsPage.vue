@@ -5,7 +5,7 @@
         <ChatList />
       </div>
       <div class="col-8 column flex">
-        <ChatDetail />
+        <ChatDetail v-if="currentChatId"/>
       </div>
     </div>
   </q-page>
@@ -14,9 +14,13 @@
 <script>
 import ChatList from "components/common/ChatList";
 import ChatDetail from "components/common/ChatDetail";
+import {mapGetters} from "vuex";
 export default {
   name: 'ChatsPage',
   components: {ChatDetail, ChatList},
+  computed: {
+    ...mapGetters(['currentChatId'])
+  }
 }
 </script>
 

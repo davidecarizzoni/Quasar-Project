@@ -37,7 +37,7 @@ export default {
     }
 
     const getUserFromChat = (chat) => {
-      const participant =  (chat?.participants || []).find(p => p?.isMe)
+      const participant =  (chat?.participants || []).find(p => !p?.isMe)
       return participant?.user || {}
     }
 
