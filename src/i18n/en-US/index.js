@@ -12,6 +12,7 @@ export default {
     username: 'Username',
     role: 'Ruolo',
     index: 'Index',
+    login: 'Login',
     save: 'Salva',
     search: 'Cerca',
     user: 'Utente',

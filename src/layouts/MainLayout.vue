@@ -16,7 +16,10 @@
           Quasar App
         </q-toolbar-title>
 
-        <div>Quasar v{{ $q.version }}</div>
+        <div>
+          <q-btn :label="$t('common.login')" @click="onClickLogin" v-if="!isLogged"/>
+          <q-btn :label="$t('common.logout')" @click="onClickLogout" v-else/>
+        </div>
       </q-toolbar>
     </q-header>
 
@@ -52,18 +55,38 @@
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
+import {computed, defineComponent, ref} from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useQuasar } from 'quasar'
+import LoginDialog from "components/LoginDialog";
+import {useStore} from "vuex";
 
 export default defineComponent({
   name: 'MainLayout',
   setup () {
     const leftDrawerOpen = ref(false)
+    const store = useStore()
+    const $q = useQuasar()
+
+    const isLogged = computed(() => !!store.getters.getToken)
+
+    const onClickLogin = () => {
+      $q.dialog({
+        component: LoginDialog,
+      })
+    }
+
+    const onClickLogout  = () => {
+      store.commit('logout')
+    }
 
     return {
       leftDrawerOpen,
+      onClickLogin,
+      onClickLogout,
       route: useRoute(),
       router: useRouter(),
+      isLogged,
       toggleLeftDrawer () {
         leftDrawerOpen.value = !leftDrawerOpen.value
       }
